@@ -12,7 +12,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: handler.deaTeatro
-      Runtime: nodejs14.x
+      Runtime: nodejs20.x
       CodeUri: .   
   
   DeaTeatroInvokePermission:
@@ -43,7 +43,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: handler.interpol
-      Runtime: nodejs14.x
+      Runtime: nodejs20.x
       CodeUri: . 
       Events:
         Trigger:
@@ -57,12 +57,12 @@ Resources:
               detail:
                 ticketEventName:
                   - "Interpol"
-                  
+
   PutOrderFunction:
       Type: 'AWS::Serverless::Function'
       Properties:
         Handler: handler.putOrder
-        Runtime: nodejs14.x
+        Runtime: nodejs20.x
         CodeUri: .
         Policies:
           - Statement:
