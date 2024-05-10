@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk');
-const eventbridge = new AWS.EventBridge();
+import { EventBridge } from '@aws-sdk';
+const eventbridge = new EventBridge();
 
 function putEventInEventBridge(orderDetails) {
 
@@ -24,7 +24,7 @@ function putEventInEventBridge(orderDetails) {
     return eventbridge.putEvents(params).promise();
   }
 
-exports.putOrder = async (event) => {
+export async function putOrder(event) {
     console.log('putOrder');
 
     const orderDetails = JSON.parse(event.body);

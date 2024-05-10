@@ -63,7 +63,7 @@ Resources:
       Properties:
         Handler: handler.putOrder
         Runtime: nodejs20.x
-        CodeUri: PutOrder/
+        CodeUri: orderManager/
         Policies:
           - Statement:
             - Sid: EventBridgePutEvents 
