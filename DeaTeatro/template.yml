@@ -3,33 +3,33 @@ Transform: 'AWS::Serverless-2016-10-31'
 
 Resources:
 
-  PizzaHatFunction:
+  DeaTeatroFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: handler.pizzaHat
+      Handler: handler.deaTeatro
       Runtime: nodejs14.x
       CodeUri: .   
   
-  PizzaHatInvokePermission:
+  DeaTeatroInvokePermission:
     Type: 'AWS::Lambda::Permission'
     Properties:
       Action: 'lambda:InvokeFunction'
-      FunctionName: !Ref PizzaHatFunction
+      FunctionName: !Ref DeaTeatroFunction
       Principal: events.amazonaws.com
       SourceArn: !GetAtt MyEventsRule.Arn
 
   MyEventsRule:
     Type: 'AWS::Events::Rule'
     Properties:
-      Description: "Order to PizzaHat"
+      Description: "Order to DeaTeatro"
       EventPattern: 
         source:
           - custom.orderManager
         detail-type:
           - order                
         detail:
-          restaurantName:
-            - "pizzaHat"
+          ticketEventName:
+            - "DeaTeatro"
       Targets:
-        - Arn: !GetAtt PizzaHatFunction.Arn
+        - Arn: !GetAtt DeaTeatroFunction.Arn
           Id: "RuleId"

@@ -4,6 +4,13 @@ _Infrastructure as code framework used_: AWS SAM
 
 _AWS Services used_: AWS Lambda, API Gateway, AWS EventBridge
 
+Forked to be used as a demo of the AWS event bridge in ticket implementation.
+
+## Changes in this demo
+
+PizzaHat -> [DeaTeatro teather event](https://teleticket.com.pe/queca-ya-sientese-seniora-teatro-nos)
+ThaiLand -> [Interpol music event](https://teleticket.com.pe/interpol-2024)
+
 ## Summary of the demo
 
 This demo is organized in multiple branches.

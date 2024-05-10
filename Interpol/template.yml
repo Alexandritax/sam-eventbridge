@@ -3,10 +3,10 @@ Transform: 'AWS::Serverless-2016-10-31'
 
 Resources:
 
-  ThaiLandFunction:
+  InterpolFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: handler.thaiLand
+      Handler: handler.interpol
       Runtime: nodejs14.x
       CodeUri: . 
       Events:
@@ -19,5 +19,5 @@ Resources:
               detail-type:
                 - order                
               detail:
-                restaurantName:
-                  - "thaiLand"
+                ticketEventName:
+                  - "Interpol"

@@ -4,7 +4,7 @@ const eventbridge = new AWS.EventBridge();
 function putEventInEventBridge(orderDetails) {
 
     const detail = { 
-      restaurantName: orderDetails.restaurantName,
+      ticketEventName: orderDetails.ticketEventName,
       order: orderDetails.order,
       customerName: orderDetails.name,
       amount: orderDetails.amount
