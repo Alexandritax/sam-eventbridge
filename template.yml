@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: myTicketApp
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+
+  DeaTeatroFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: handler.deaTeatro
+      Runtime: nodejs14.x
+      CodeUri: .   
+  
+  DeaTeatroInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref DeaTeatroFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt MyEventsRule.Arn
+
+  MyEventsRule:
+    Type: 'AWS::Events::Rule'
+    Properties:
+      Description: "Order to DeaTeatro"
+      EventPattern: 
+        source:
+          - custom.orderManager
+        detail-type:
+          - order                
+        detail:
+          ticketEventName:
+            - "DeaTeatro"
+      Targets:
+        - Arn: !GetAtt DeaTeatroFunction.Arn
+          Id: "RuleId"
+    
+  InterpolFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: handler.interpol
+      Runtime: nodejs14.x
+      CodeUri: . 
+      Events:
+        Trigger:
+          Type: CloudWatchEvent 
+          Properties:
+            Pattern:
+              source:
+                - custom.orderManager
+              detail-type:
+                - order                
+              detail:
+                ticketEventName:
+                  - "Interpol"
+                  
+  PutOrderFunction:
+      Type: 'AWS::Serverless::Function'
+      Properties:
+        Handler: handler.putOrder
+        Runtime: nodejs14.x
+        CodeUri: .
+        Policies:
+          - Statement:
+            - Sid: EventBridgePutEvents 
+              Effect: "Allow"
+              Action: 
+                - "events:PutEvents"
+              Resource: "*"
+        Events:
+          PutOrderAPI:
+            Type: Api
+            Properties:
+              Path: /order
+              Method: POST
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  TestingAPI:
+    Description: "API Gateway endpoint URL for Prod stage for Order function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/order"
