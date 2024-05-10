@@ -13,7 +13,7 @@ Resources:
     Properties:
       Handler: handler.deaTeatro
       Runtime: nodejs20.x
-      CodeUri: .   
+      CodeUri: DeaTeatro/   
   
   DeaTeatroInvokePermission:
     Type: 'AWS::Lambda::Permission'
@@ -44,7 +44,7 @@ Resources:
     Properties:
       Handler: handler.interpol
       Runtime: nodejs20.x
-      CodeUri: . 
+      CodeUri: Interpol/
       Events:
         Trigger:
           Type: CloudWatchEvent 
@@ -63,7 +63,7 @@ Resources:
       Properties:
         Handler: handler.putOrder
         Runtime: nodejs20.x
-        CodeUri: .
+        CodeUri: PutOrder/
         Policies:
           - Statement:
             - Sid: EventBridgePutEvents 
